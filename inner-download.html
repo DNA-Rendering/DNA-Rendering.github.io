@@ -301,6 +301,38 @@
     --smc_file [location of smc file] \
     --outdir [output folder to store extracted data]</code></pre>
 
+<h4>Annotations Format</h4>
+Annotation is stored in SMC file through H5 format and each file is named as "{actorID}_{performanceID}.smc".<br>
+Structure of SMC file:
+<pre><code>{
+    "Camera_Parameter"{                   # camera parameters defined in opencv coordination                     
+      "cameraID"{                         
+          "K"                             : # camera intrinsics, double (3, 3)                   
+          "D"                             : # camera distortion, double (5,  )
+          "RT"                            : # matrix that transforms from camera space to world space, double (4,4)                  
+          "Color_Calibration"             : # calibration parameters in BGR format, double (3,3)
+      }
+    }
+    "Mask"{                               : # foreground segmentation results
+      "cameraID"                          : # uint8 (H, W)
+    }
+    "Keypoints_2D"{                       : # 2D keypoints of the person
+      "cameraID"                          : # double (frame_num,joint_num,3)
+    }                         
+    "Keypoints_3D"                        : # 3D keypoints of the person, double (frame_num,joint_num,3)
+    "SMPLx"{
+      "beta"                              : # shape parameters of the person, double (1, 10)
+      "full_pose"                         : # pose parameters of the person, double (frame_num, joint_num, 3)
+      ...                                 : # other parameters
+    }
+}</code></pre>
+
+Please check "smc_annots_readery.py" in <i>dna_rendering_sample_code.zip</i> for your reference.
+<pre><code>python smc_annots_reader.py \
+    --smc_file [location of smc file] \ 
+    --outdir [output folder to store extracted data]</code></pre>
+
+
           <h4>Citation</h4>
           <p>If you find our dataset useful, please cite the following paper:</p>
 
