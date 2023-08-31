@@ -157,18 +157,22 @@
           <li> Actors: 37</li>
           <li> Motions Sequences: 39</li>
           <li> RGB Cameras: 60 (with known camera matrix and color calibration parameters)</li>
+          <li> Kinect Depth Cameras: 8 (with known camera matrix)</li>
           <li> Image Dimension (height x weight) :</li>
 
             <ul>
                  <li> cameraID in [0, 47]: 2448 x 2048</li>
                  <li> cameraID in [48, 59]: 4096 x 3000</li>
+                 <li> depth_cameraID in [0, 7]: 576 x 640</li>
             </ul>
-          <li> Total Frames: 513000</li>
+          <li> Total RGB Frames: 513000</li>
+          <li> Total Kinect Depth Frames: 513000</li>
+          <li> Total Kinect Mask Frames: 513000</li>
           <li> 2D keypoints: 513000</li>
           <li> 3D keypoints: 8550</li>
           <li> Matting: 513000</li>
           <li> SMPLx: 8550</li>
-          <li> Total storage: ~167GB</li>
+          <li> Total storage: ~192GB</li>
       </ul>
     </p>
           <h4>Timeline</h4>
@@ -177,7 +181,7 @@
             <center><a href="assets/img/output-1.jpg"><img class="listitemimage" src="assets/img/output-1.jpg" width="100%"></a><br></center>
             <center><p>Released actors in the part 1</p></center>
         </div>
-          <h4>Data Format</h4>
+          <h4>Main Data Format</h4>
           Data is stored in SMC file through H5 format and each file is named as "{actorID}_{performanceID}.smc".<br>
           Structure of SMC file:
 
@@ -304,45 +308,74 @@
     }
 }</code></pre>
 
-          Please check "smc_reader.py" in <i>dna_rendering_sample_code.zip</i> for your reference.
-<pre><code>python smc_reader.py \
-    --smc_file [location of smc file] \
-    --outdir [output folder to store extracted data]</code></pre>
-
 <h4>Annotations Format</h4>
 Annotation is stored in SMC file through H5 format and each file is named as "{actorID}_{performanceID}.smc".<br>
 Structure of SMC file:
 <pre><code>{
-    "Camera_Parameter"{                   # camera parameters defined in opencv coordination                     
-      "cameraID"{                         
+    "Camera_Parameter": {                   # camera parameters defined in opencv coordination                     
+      "cameraID": {                         
           "K"                             : # camera intrinsics, double (3, 3)                   
           "D"                             : # camera distortion, double (5,  )
           "RT"                            : # matrix that transforms from camera space to world space, double (4,4)                  
           "Color_Calibration"             : # calibration parameters in BGR format, double (3,3)
       }
     }
-    "Mask"{                               : # foreground segmentation results
+    "Mask": {                               : # foreground segmentation results
       "cameraID"                          : # uint8 (H, W)
     }
-    "Keypoints_2D"{                       : # 2D keypoints of the person
+    "Keypoints_2D": {                       : # 2D keypoints of the person
       "cameraID"                          : # double (frame_num,joint_num,3)
     }                         
     "Keypoints_3D"                        : # 3D keypoints of the person, double (frame_num,joint_num,3)
-    "SMPLx"{
+    "SMPLx": {
       "beta"                              : # shape parameters of the person, double (1, 10)
       "full_pose"                         : # pose parameters of the person, double (frame_num, joint_num, 3)
       ...                                 : # other parameters
     }
 }</code></pre>
 
-Please check "smc_annots_readery.py" in <i>dna_rendering_sample_code.zip</i> for your reference.
-<pre><code>python smc_annots_reader.py \
-    --smc_file [location of smc file] \ 
-    --outdir [output folder to store extracted data]</code></pre>
+<h4>Kinect Data Format</h4>
+Kinect data is stored in SMC file through H5 format and each file is named as "{actorID}_{performanceID}_kinect.smc".<br>
+Structure of Kinect Data SMC file:
+<pre><code>{
+    "Calibration": {
+      "Kinect": {                            # kinect camera parameters defined in opencv coordination                                  
+        "cameraID": {                         
+            "K"                             : # camera intrinsics, double (3, 3)                   
+            "D"                             : # camera distortion, double (5,  )
+            "RT"                            : # matrix that transforms from camera space to world space, double (4,4)                  
+        }
+      }
+    }
+    "Kinect": {
+      "attrs": {
+          "num_device"       :int
+          "num_frame":       :int
+          "resolution"       :(int, int) ### stored as (height, weight)
+      },
+      "cameraID": {
+          "depth":{
+              "frameID":     :uint16  ### encoded byte array
+          },
+          "mask":{
+            "frameID":       :uint8  ### encoded byte array
+          }
+      }
+}</code></pre>
 
+Please check "smc_reader_full.py" in <i>dna_rendering_sample_code.zip</i> for your reference.
+<pre><code>python smc_reader_full.py \
+    --smc_file [location of smc file] </code></pre>
 
-          <h4>Citation</h4>
-          <p>If you find our dataset useful, please cite the following paper:</p>
+Depth information captured by kinect camera is useful to generate point-clouds. 
+Please check "gen_pcd_from_kinect.py" in <i>dna_rendering_sample_code.zip</i> for your reference.
+<pre><code>python gen_pcd_from_kinect.py \
+  --smc_rgb_file [smc file stored rgb images] \
+  --smc_annot_file [smc file stored rgb camera matrix] \
+  --smc_kinect_file [smc file stored kinect data] </code></pre>
+
+<h4>Citation</h4>
+<p>If you find our dataset useful, please cite the following paper:</p>
 
 <pre><code>@article{2023dnarendering,
       title={DNA-Rendering: A Diverse Neural Actor Repository for High-Fidelity Human-centric Rendering},
