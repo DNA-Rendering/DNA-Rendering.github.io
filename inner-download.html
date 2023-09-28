@@ -152,7 +152,10 @@
           <h4>Overview</h4>
           <p>DNA-Rendering dataset contains 500 actors, 1500 outfits and 1187 motion types,and we captured over 5000 motion sequences in total. <br>
             In our <a href="https://arxiv.org/pdf/2307.10173.pdf"> technical report </a>,
-             part 1 (39 cases) is used for case specific benchmarks in Novel View Synthesis and Novel Pose Animation. The following information is available currently:
+             part 1 (39 cases) is used for case specific benchmarks in Novel View Synthesis and Novel Pose Animation, 
+             part 2 (400 cases) is used for benchmarks in Novel Identity Rendering. 
+             The following information is available currently:
+      <!--  
       <ul>
           <li> Actors: 37</li>
           <li> Motions Sequences: 39</li>
@@ -174,6 +177,101 @@
           <li> SMPLx: 8550</li>
           <li> Total storage: ~192GB</li>
       </ul>
+      -->
+      <div>
+        <table>
+          <tr>
+            <th></th>
+            <td><b>Part 1</b></td>
+            <td><b>Part 2</b></td>
+          </tr>
+          <tr>
+            <th>Actors</th>
+            <td>37</td>
+            <td>116</td>
+          </tr>
+          <tr>
+            <th>Motions Sequences</th>
+            <td>39</td>
+            <td>400</td>
+          </tr>
+          <tr>
+            <th>
+              RGB Cameras<br>
+              <div class="details">(with known camera matrix and color calibration parameters)</div>
+            </th>
+            <td colspan="2">60</td>
+            <!-- <td>60</td> -->
+          </tr>
+          <tr>
+            <th>Kinect Depth Cameras<br>
+              <div class="details">(with known camera matrix)</div>
+            </th>
+            <td colspan="2">8</td>
+            <!-- <td>8</td> -->
+          </tr>
+          <tr>
+            <th>Image Dimension<br>
+              <div class="details">(height x weight)</div>
+            </th>
+            <td colspan="2">
+                cameraID in [0, 47]: 2448 x 2048<br>
+                cameraID in [48, 59]: 4096 x 3000<br>
+                depth_cameraID in [0, 7]: 576 x 640
+            </td>
+          </tr>
+          <tr>
+            <th>Total RGB Frames<br>
+              <div class="details">(60 views)</div>
+            </th>
+            <td>513,000</td>
+            <td>4,999,500</td>
+          </tr>
+          <tr>
+            <th>Total Kinect Depth Frames<br>
+              <div class="details">(8 views)</div>
+            </th>
+            <td>68,400</td>
+            <td>666,600</td>
+          </tr>
+          <tr>
+            <th>Total Kinect Mask Frames<br>
+              <div class="details">(8 views)</div>
+            </th>
+            <td>68,400</td>
+            <td>666,600</td>
+          </tr>
+          <tr>
+            <th>2D keypoints<br>
+              <div class="details">(60 views)</div>
+            </th>
+            <td>51300</td>
+            <td>/</td>
+          </tr>
+          <tr>
+            <th>3D keypoints</th>
+            <td>8,550</td>
+            <td>/</td>
+          </tr>
+          <tr>
+            <th>Matting<br>
+              <div class="details">(60 views)</div>
+            </th>
+            <td>513,000</td>
+            <td>/</td>
+          </tr>
+          <tr>
+            <th>SMPLx</th>
+            <td>8,550</td>
+            <td>/</td>
+          </tr>
+          <tr>
+            <th>Total storage</th>
+            <td>~192GB</td>
+            <td>~1.8T</td>
+          </tr>
+        </table>
+      </div>
     </p>
           <h4>Timeline</h4>
             <center><a href="assets/img/timeline.png"><img src="assets/img/timeline.png" width="85%"></a><br></center>
@@ -309,7 +407,7 @@
 }</code></pre>
 
 <h4>Annotations Format</h4>
-Annotation is stored in SMC file through H5 format and each file is named as "{actorID}_{performanceID}.smc".<br>
+Annotation is stored in SMC file through H5 format and each file is named as "{actorID}_{performanceID}_annots.smc".<br>
 Structure of SMC file:
 <pre><code>{
     "Camera_Parameter": {                   # camera parameters defined in opencv coordination                     
