@@ -155,29 +155,6 @@
              part 1 (39 cases) is used for case specific benchmarks in Novel View Synthesis and Novel Pose Animation, 
              part 2 (400 cases) is used for benchmarks in Novel Identity Rendering. 
              The following information is available currently:
-      <!--  
-      <ul>
-          <li> Actors: 37</li>
-          <li> Motions Sequences: 39</li>
-          <li> RGB Cameras: 60 (with known camera matrix and color calibration parameters)</li>
-          <li> Kinect Depth Cameras: 8 (with known camera matrix)</li>
-          <li> Image Dimension (height x weight) :</li>
-
-            <ul>
-                 <li> cameraID in [0, 47]: 2448 x 2048</li>
-                 <li> cameraID in [48, 59]: 4096 x 3000</li>
-                 <li> depth_cameraID in [0, 7]: 576 x 640</li>
-            </ul>
-          <li> Total RGB Frames: 513000 (60 views)</li>
-          <li> Total Kinect Depth Frames: 68400 (8 views)</li>
-          <li> Total Kinect Mask Frames: 68400 (8 views)</li>
-          <li> 2D keypoints: 513000 (60 views)</li>
-          <li> 3D keypoints: 8550</li>
-          <li> Matting: 513000 (60 views)</li>
-          <li> SMPLx: 8550</li>
-          <li> Total storage: ~192GB</li>
-      </ul>
-      -->
       <div>
         <table>
           <tr>
@@ -245,30 +222,30 @@
             <th>2D keypoints<br>
               <div class="details">(60 views)</div>
             </th>
-            <td>51300</td>
-            <td>/</td>
+            <td>513,000</td>
+            <td>4,999,500</td>
           </tr>
           <tr>
             <th>3D keypoints</th>
             <td>8,550</td>
-            <td>/</td>
+            <td>83,325</td>
           </tr>
           <tr>
             <th>Matting<br>
               <div class="details">(60 views)</div>
             </th>
             <td>513,000</td>
-            <td>/</td>
+            <td>4,999,500</td>
           </tr>
           <tr>
             <th>SMPLx</th>
             <td>8,550</td>
-            <td>/</td>
+            <td>83,325</td>
           </tr>
           <tr>
             <th>Total storage</th>
             <td>~192GB</td>
-            <td>~1.8T</td>
+            <td>~2.2T</td>
           </tr>
         </table>
       </div>
@@ -276,9 +253,25 @@
           <h4>Timeline</h4>
             <center><a href="assets/img/timeline.png"><img src="assets/img/timeline.png" width="85%"></a><br></center>
           <p>More data will be released soon. Please stay tuned.</p>
-            <center><a href="assets/img/output-1.jpg"><img class="listitemimage" src="assets/img/output-1.jpg" width="100%"></a><br></center>
+            <!-- <center><a href="assets/img/output-1.jpg"><img class="listitemimage" src="assets/img/output-1.jpg" width="100%"></a><br></center>
             <center><p>Released actors in the part 1</p></center>
-        </div>
+
+            <center><a href="assets/img/output-2.jpg"><img class="listitemimage" src="assets/img/output-2.jpg" width="100%"></a><br></center>
+            <center><p>Released actors in the part 2</p></center>
+           -->
+          
+          <div class="col-md-12 box wow fadeInRight" data-wow-delay="0.1s">
+            <div id="img-carousel" class="carousel tab-carousel">
+              <div> 
+                <img class="listitemimage" src="assets/img/output-1.jpg" width="100%">
+                <center><p>Released actors in the part 1</p></center>
+              </div>
+              <div> 
+                <img class="listitemimage" src="assets/img/output-2.jpg" width="100%">
+                <center><p>Released actors in the part 2</p></center>
+              </div>
+            </div>
+          </div>
           <h4>Main Data Format</h4>
           Data is stored in SMC file through H5 format and each file is named as "{actorID}_{performanceID}.smc".<br>
           Structure of SMC file:
@@ -536,147 +529,58 @@ Please check "gen_pcd_from_kinect.py" in <i>dna_rendering_sample_code.zip</i> fo
   <script src="assets/js/glightbox.js"></script>
   <script src="assets/js/site.js"></script>
   <script src="assets/js/main.js"></script>
-<script>
-    var lightbox = GLightbox();
-    lightbox.on('open', (target) => {
-        console.log('lightbox opened');
-    });
-    var lightboxDescription = GLightbox({
-        selector: '.glightbox2'
-    });
-    var lightboxVideo = GLightbox({
-        selector: '.glightbox3'
-    });
-    lightboxVideo.on('slide_changed', ({ prev, current }) => {
-        console.log('Prev slide', prev);
-        console.log('Current slide', current);
+  
+  <script>
+    $(document).ready(function() {
+        var tab = '1';
+        const image_arr=["assets/img/output-1.jpg", "assets/img/output-2.jpg"];
+        let img_len = image_arr.length
+        var img_idx = 0;
+        
+        // Check for click events on the navbar burger icon
+        $(".navbar-burger").click(function() {
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          $(".navbar-burger").toggleClass("is-active");
+          $(".navbar-menu").toggleClass("is-active");
+        });
 
-        const { slideIndex, slideNode, slideConfig, player } = current;
-
-        if (player) {
-            if (!player.ready) {
-                // If player is not ready
-                player.on('ready', (event) => {
-                    // Do something when video is ready
-                });
-            }
-
-            player.on('play', (event) => {
-                console.log('Started play');
-            });
-
-            player.on('volumechange', (event) => {
-                console.log('Volume change');
-            });
-
-            player.on('ended', (event) => {
-                console.log('Video ended');
-            });
+        var options = {
+          slidesToScroll: 1,
+          slidesToShow: 1,
+          loop: true,
+          infinite: false,
+          autoplay: false,
+          autoplaySpeed: 3000,
         }
-    });
-
-    var lightboxInlineIframe = GLightbox({
-        selector: '.glightbox4'
-    });
-
-    /* var exampleApi = GLightbox({ selector: null });
-    exampleApi.insertSlide({
-        href: 'https://picsum.photos/1200/800',
-    });
-    exampleApi.insertSlide({
-        width: '500px',
-        content: '<p>Example</p>'
-    });
-    exampleApi.insertSlide({
-        href: 'https://www.youtube.com/watch?v=WzqrwPhXmew',
-    });
-    exampleApi.insertSlide({
-        width: '200vw',
-        content: document.getElementById('inline-example')
-    });
-    exampleApi.open(); */
-</script>
-  <!--<script>
-const myTimeout = setTimeout(displaynone, 1000);
-
-function displaynone() {
-      for(var i = 2; i <= 4; i++) {
-          document.getElementById(String(i)+"-carousel").style.display = "none";
-      }
-}
-  </script>-->
-<script>
-$(document).ready(function() {
-    // Check for click events on the navbar burger icon
-    $(".navbar-burger").click(function() {
-      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-      $(".navbar-burger").toggleClass("is-active");
-      $(".navbar-menu").toggleClass("is-active");
-    });
-
-
-    $('#tabs li').on('click', function() {
-      var tab = $(this).data('tab');
-
-      $('#tabs li').removeClass('is-active');
-      $(this).addClass('is-active');
-
-      // $('#tab-content p').removeClass('is-active');
-      // $('p[data-content="' + tab + '"]').addClass('is-active');
-      // $('.tab-carousel').s('is-active');
-      // $("."+tab+"-carousel").addClass('is-active');
-
-      if (tab != "0"){
-        for(var i = 1; i <= 4; i++) {
-            document.getElementById(String(i)+"-carousel").style.display = "none";
+    
+        var carousels = bulmaCarousel.attach('.carousel', options);
+        // Initialize all div with carousel class
+    
+        // Loop on each carousel initialized
+        for(var i = 0; i < carousels.length; i++) {
+          // Add listener to  event
+          carousels[i].on('before:show', state => {
+            console.log(state);
+          });
         }
-        document.getElementById(tab+"-carousel").style.display = "";
-      }
-      else{
-        for(var i = 1; i <= 4; i++) {
-          document.getElementById(String(i)+"-carousel").style.display = "";
-      }
-      }
-    });
-
-    var options = {
-			slidesToScroll: 1,
-			slidesToShow: 3,
-			loop: true,
-			infinite: true,
-			autoplay: false,
-			autoplaySpeed: 3000,
-    }
-
-
-    var carousels = bulmaCarousel.attach('.carousel', options);
-		// Initialize all div with carousel class
-
-    // Loop on each carousel initialized
-    for(var i = 0; i < carousels.length; i++) {
-    	// Add listener to  event
-    	carousels[i].on('before:show', state => {
-    		console.log(state);
-    	});
-    }
-
-    // Access to bulmaCarousel instance of an element
-    var element = document.querySelector('#my-element');
-    if (element && element.bulmaCarousel) {
-    	// bulmaCarousel instance is available as element.bulmaCarousel
-    	element.bulmaCarousel.on('before-show', function(state) {
-    		console.log(state);
-    	});
-    }
-
-    /*var player = document.getElementById('interpolation-video');
-    player.addEventListener('loadedmetadata', function() {
-      $('#interpolation-slider').on('input', function(event) {
-        console.log(this.value, player.duration);
-        player.currentTime = player.duration / 100 * this.value;
-      })
-    }, false);*/
-    preloadInterpolationImages();
+    
+        // Access to bulmaCarousel instance of an element
+        var element = document.querySelector('#my-element');
+        if (element && element.bulmaCarousel) {
+          // bulmaCarousel instance is available as element.bulmaCarousel
+          element.bulmaCarousel.on('before-show', function(state) {
+            console.log(state);
+          });
+        }
+    
+        /*var player = document.getElementById('interpolation-video');
+        player.addEventListener('loadedmetadata', function() {
+          $('#interpolation-slider').on('input', function(event) {
+            console.log(this.value, player.duration);
+            player.currentTime = player.duration / 100 * this.value;
+          })
+        }, false);*/
+        preloadInterpolationImages();
     /*
         $('#interpolation-slider').on('input', function(event) {
           setInterpolationImage(this.value);
@@ -684,44 +588,43 @@ $(document).ready(function() {
         setInterpolationImage(0);
         $('#interpolation-slider').prop('max', NUM_INTERP_FRAMES - 1);
     */
-    bulmaSlider.attach();
+        bulmaSlider.attach();
+    
+    })
+  </script>
+  
+  <style>
+      pre {
+          position: relative;
+          margin-bottom: 24px;
+          border-radius: 3px;
+          border: 1px solid #C3CCD0;
+          background: #FFF;
+          overflow: hidden;
+      }
 
-})
+      code.has-numbering {
+          margin-left: 21px;
+      }
 
-</script>
-
-
-    <style>
-        pre {
-            position: relative;
-            margin-bottom: 24px;
-            border-radius: 3px;
-            border: 1px solid #C3CCD0;
-            background: #FFF;
-            overflow: hidden;
-        }
-
-        code.has-numbering {
-            margin-left: 21px;
-        }
-
-        .pre-numbering {
-            margin: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 20px;
-            padding: 0.5em 1px 0.5em 0;
-            border-right: 1px solid #C3CCD0;
-            border-radius: 3px 0 0 3px;
-            background-color: #EEE;
-            text-align: center;
-            font-family: Menlo, monospace;
-            font-size: 0.8em;
-            font-weight: 300;
-            color: #AAA;
-        }
-    </style>
+      .pre-numbering {
+          margin: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 20px;
+          padding: 0.5em 1px 0.5em 0;
+          border-right: 1px solid #C3CCD0;
+          border-radius: 3px 0 0 3px;
+          background-color: #EEE;
+          text-align: center;
+          font-family: Menlo, monospace;
+          font-size: 0.8em;
+          font-weight: 300;
+          color: #AAA;
+      }
+      
+  </style>
 
 </body>
 
