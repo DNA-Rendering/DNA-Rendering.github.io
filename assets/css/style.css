@@ -860,7 +860,7 @@ table tr:last-child{
 
 table th{
   position: relative;
-  width: 35%;
+  width: 28%;
   background-color: #7d7d7d;
   color: white;
   text-align: center;
@@ -881,7 +881,7 @@ table th:after{
 }
 
 table td{
-  width: 24%;
+  width: 18%;
   text-align: center;
   background-color: #eee;
   padding: 10px 0;
@@ -890,7 +890,7 @@ table td{
 
 th .details{
   font-weight: 100;
-  font-size: 6px;
+  font-size: 8px;
 }
 
 
