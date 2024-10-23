@@ -139,8 +139,7 @@
           <span class="section-divider"></span>
             <p>To request the dataset, please sign the downloaded <a href="assets/img/download/DNA-RENDERING-license-agreement.pdf">License Agreement</a> here,
                 and drop an e-mail (with your institution's mail address) to
-                Huiwen Luo (<a href="mailto:luohuiwen@pjlab.org.cn" class="author-social" target="_blank">luohuiwen@pjlab.org.cn</a>)
-                and CC Wayne Wu(<a href="mailto:wuwenyan0503@gmail.com" class="author-social" target="_blank">wuwenyan0503@gmail.com</a>)
+                Wayne Wu(<a href="mailto:wuwenyan0503@gmail.com" class="author-social" target="_blank">wuwenyan0503@gmail.com</a>)
                 and Kwan-Yee Lin(<a href="mailto:linjunyi9335@gmail.com" class="author-social" target="_blank">linjunyi9335@gmail.com</a>).
             <!--The email Subject Title is "DNA-Rendering Dataset Release Agreement". We will verify your request and contact you with the dataset link and password to unzip the image data.-->
             <br>*Do not give one word answers such as 'testing' or 'research'. Please give a more detailed description (2~3sentences) of the intended usage. It would help us to process your request more efficiently. 
@@ -155,7 +154,13 @@
 
             <p>If you have any other questions, please discuss here: <a href="https://github.com/DNA-Rendering/DNA-Rendering/issues">FAQ</a> </p>
 
-            <p><span class="note">NOTE:</span> In data part 5, motion sequence 0621_04 has been replaced with 0621_03 due to a duplication issue.</p>
+            <p class="note">NOTE:</p>
+            <p class="indent">1. In Part 5, motion sequence 0621_04 has been replaced with 0621_03 due to a duplication issue.</p>
+            <p class="indent">2. From Part 1 to Part 6, all captured subjects have been made available, and the data is shared in SMC format through a Google Drive link. The remaining motion sequences of these subjects are shared in the form of raw videos on Dropbox. <span style="font-weight: bold;">Users who have previously applied for the Google Drive link will need to re-apply for the Dropbox link. </span>
+            <div style="text-indent: 4%;">* Part 7: the remaining special motion sequences of subjects wearing special clothing.</div>
+            </p>
+            
+              
 
           <h4>Overview</h4>
           <p>DNA-Rendering dataset contains 500 actors, 1500 outfits and 1187 motion types,and we captured over 5000 motion sequences in total. <br>
@@ -758,8 +763,12 @@ Please check "gen_pcd_from_kinect.py" in <i>dna_rendering_sample_code.zip</i> fo
       }
 
       .note {
-        font-weight: bold;
+        font-weight: bolder;
         color: #f00;
+      }
+
+      .indent {
+        text-indent: 2%;
       }
       
   </style>
